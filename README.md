@@ -1,4 +1,4 @@
-apierror
+apierrors
 ----
 
 # Introduction
