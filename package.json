@@ -1,5 +1,5 @@
 {
-  "name": "apierrors",
+  "name": "@trenskow/apierror",
   "version": "1.0.0",
   "description": "A small collection of error objects that can be used for REST APIs.",
   "main": "index.js",

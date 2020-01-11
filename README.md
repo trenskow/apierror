@@ -1,4 +1,4 @@
-apierrors
+@trenskow/apierror
 ----
 
 # Introduction
