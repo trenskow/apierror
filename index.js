@@ -111,6 +111,14 @@ class InternalError extends ApiError {
 
 }
 
+class ServiceUnavailable extends ApiError {
+
+	constructor(message) {
+		super('service-unavailable', message || 'Service unavailable', 503);
+	}
+
+}
+
 module.exports = exports = ApiError;
 exports.NotAuthorized = NotAuthorized;
 exports.NotFound = NotFound;
@@ -120,3 +128,4 @@ exports.BadRequest = BadRequest;
 exports.TooManyRequests = TooManyRequests;
 exports.PayloadTooLarge = PayloadTooLarge;
 exports.InternalError = InternalError;
+exports.ServiceUnavailable = ServiceUnavailable;
