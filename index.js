@@ -114,7 +114,7 @@ class InternalError extends ApiError {
 class ServiceUnavailable extends ApiError {
 
 	constructor(message) {
-		super('service-unavailable', message || 'Service unavailable', 503);
+		super('service-unavailable', message || 'Service unavailable.', undefined, 503);
 	}
 
 }
