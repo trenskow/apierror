@@ -93,7 +93,7 @@ class NotFound extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Resource not found.', merge(options, {
-			name: 'not-found',
+			name: options.name || 'not-found',
 			statusCode: 404
 		}));
 	}
@@ -105,7 +105,7 @@ class Conflict extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Resource already exists.', merge(options, {
-			name: 'already-exists',
+			name: options.name || 'already-exists',
 			statuCode: 409
 		}));
 	}
@@ -117,7 +117,7 @@ class MethodNotAllowed extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Method is not allowed.', merge(options, {
-			name: 'method-not-allowed',
+			name: options.name || 'method-not-allowed',
 			statusCode: 405
 		}));
 	}
@@ -129,7 +129,7 @@ class BadRequest extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Bad request', merge(options, {
-			name: 'bad-request',
+			name: options.name || 'bad-request',
 			statusCode: 400
 		}));
 	}
@@ -141,7 +141,7 @@ class TooManyRequests extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Too many requests.', merge(options, {
-			name: 'too-many-requests',
+			name: options.name || 'too-many-requests',
 			statusCode: 429
 		}));
 	}
@@ -153,7 +153,7 @@ class PayloadTooLarge extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Payload too large.', merge(options, {
-			name: 'payload-too-large',
+			name: options.name || 'payload-too-large',
 			statusCode: 413
 		}));
 	}
@@ -165,7 +165,7 @@ class InternalError extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Internal error.', merge(options, {
-			name: 'internal-error',
+			name: options.name || 'internal-error',
 			statusCode: 500
 		}));
 	}
@@ -177,7 +177,7 @@ class ServiceUnavailable extends ApiError {
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Service unavailable.', merge(options, {
-			name: 'service-unavailable',
+			name: options.name || 'service-unavailable',
 			statusCode: 503
 		}));
 	}
