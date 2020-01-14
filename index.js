@@ -1,20 +1,48 @@
 'use strict';
 
+const
+	merge = require('merge');
+
 class ApiError extends Error {
 
 	static parse(data, statusCode, origin) {
-		let error = new ApiError(data.name, data.message, data.entity, statusCode, data.keyPath);
-		error._origin = origin;
-		return error;
+		return new ApiError(merge(data, {
+			statusCode: statusCode,
+			origin: origin
+		}));
 	}
 
-	constructor(name, message, entity, statusCode = 400, keyPath = []) {
+	static _correctArguments(message, options) {
+		
+		if (typeof message === 'object' && message !== null && !options) {
+			options = message;
+			message = options.message;
+		}
+
+		options = options || {};
+
+		return [ message, options ];
+
+	}
+
+	constructor(message, options) {
+
+		[ message, options ] = ApiError._correctArguments(message, options);
+
+		if (typeof message !== 'string') throw TypeError('Message must be of type string.');
+
 		super(message);
-		this._name = name;
-		this._entity = entity;
-		this._statusCode = statusCode;
-		if (typeof keyPath === 'string') keyPath = keyPath.split('.');
-		this._keyPath = keyPath;
+
+		this._name = options.name;
+		this._entity = options.entity;
+		this._statusCode = options.statusCode || 500;
+
+		if (typeof options.keyPath === 'string') options.keyPath = options.keyPath.split('.');
+
+		this._keyPath = options.keyPath;
+
+		this._origin = options.origin;
+
 	}
 
 	get name() {
@@ -50,71 +78,108 @@ class ApiError extends Error {
 
 class NotAuthorized extends ApiError {
 
-	constructor(entity) {
-		super('not-authorized', 'Not authorized.', entity, 401);
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Not authorized.', merge(options, {
+			name: 'not-authorized',
+			statusCode: 401
+		}));
 	}
 
 }
 
 class NotFound extends ApiError {
 
-	constructor(entity) {
-		super('not-found', 'Resource not found.', entity, 404);
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Resource not found.', merge(options, {
+			name: 'not-found',
+			statusCode: 404
+		}));
 	}
 
 }
 
 class Conflict extends ApiError {
 
-	constructor(keyPath = []) {
-		super('already-exists', 'Resource already exists.', undefined, 409, keyPath);
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Resource already exists.', merge(options, {
+			name: 'already-exists',
+			statuCode: 409
+		}));
 	}
 
 }
 
 class MethodNotAllowed extends ApiError {
-	constructor() {
-		super('method-not-allowed', 'Method is not allowed.', undefined, 405);
+
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Method is not allowed.', merge(options, {
+			name: 'method-not-allowed',
+			statusCode: 405
+		}));
 	}
+
 }
 
 class BadRequest extends ApiError {
 
-	constructor(message, keyPath) {
-		super('bad-request', message, undefined, 400, keyPath);
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Bad request', merge(options, {
+			name: 'bad-request',
+			statusCode: 400
+		}));
 	}
 
 }
 
 class TooManyRequests extends ApiError {
 
-	constructor(message) {
-		super('too-many-requests', message || 'Too many requests.', undefined, 429);
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Too many requests.', merge(options, {
+			name: 'too-many-requests',
+			statusCode: 429
+		}));
 	}
 
 }
 
 class PayloadTooLarge extends ApiError {
 
-	constructor(message) {
-		super('payment-too-large', message || 'Payload too large.', undefined, 413);
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Payload too large.', merge(options, {
+			name: 'payload-too-large',
+			statusCode: 413
+		}));
 	}
 
 }
 
 class InternalError extends ApiError {
 
-	constructor(underlayingError) {
-		super('internal-error', 'Internal error.', undefined, 500);
-		if (underlayingError) this.stack = underlayingError.stack;
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Internal error.', merge(options, {
+			name: 'internal-error',
+			statusCode: 500
+		}));
 	}
 
 }
 
 class ServiceUnavailable extends ApiError {
 
-	constructor(message) {
-		super('service-unavailable', message || 'Service unavailable.', undefined, 503);
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Service unavailable.', merge(options, {
+			name: 'service-unavailable',
+			statusCode: 503
+		}));
 	}
 
 }
