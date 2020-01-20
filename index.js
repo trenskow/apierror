@@ -43,6 +43,8 @@ class ApiError extends Error {
 
 		this._origin = options.origin;
 
+		this._underlying = options.underlying;
+
 	}
 
 	get name() {
@@ -65,12 +67,40 @@ class ApiError extends Error {
 		return this._origin;
 	}
 
-	toJSON() {
+	get underlying() {
+		return this._underlying;
+	}
+
+	get actual() {
+		return this._underlying || this;
+	}
+
+	get stacked() {
+		return this.actual.stack
+			.split('\n')
+			.map(line => line.trim())
+			.slice(1)
+			.map((line) => {
+				return /^at ((.*?)(?: \[as (.*?)\])? \((.*?):([0-9]+):([0-9]+)\)|(.*?):([0-9]+):([0-9]+))$/.exec(line);
+			})
+			.filter(line => line)
+			.map((line) => {
+				return {
+					function: line[3] || line[2] || line[7],
+					file: line[4],
+					line: parseInt(line[5] || line[8]),
+					pos: parseInt(line[6] || line[9])
+				};
+			});
+	}
+
+	toJSON(options = {}) {
 		return {
-			name: this.name.split(/(?=[A-Z])/).join('-').toLowerCase(),
+			name: this.name ? this.name.split(/(?=[A-Z])/).join('-').toLowerCase() : undefined,
 			message: this.message,
 			entity: this.entity,
-			keyPath: this.keyPath ? (this.keyPath.length > 0 ? this.keyPath.join('.') : undefined) : undefined
+			keyPath: this.keyPath ? (this.keyPath.length > 0 ? this.keyPath.join('.') : undefined) : undefined,
+			stack: options.includeStack ? this.stacked : undefined
 		};
 	}
 
