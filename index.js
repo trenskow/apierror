@@ -202,6 +202,18 @@ class InternalError extends ApiError {
 
 }
 
+class NotImplemented extends ApiError {
+
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message | 'Not implemented.', merge(options, {
+			name: options.name || 'not-implemented',
+			statusCode: 501
+		}));
+	}
+
+}
+
 class ServiceUnavailable extends ApiError {
 
 	constructor(message, options) {
@@ -223,4 +235,5 @@ exports.BadRequest = BadRequest;
 exports.TooManyRequests = TooManyRequests;
 exports.PayloadTooLarge = PayloadTooLarge;
 exports.InternalError = InternalError;
+exports.NotImplemented = NotImplemented;
 exports.ServiceUnavailable = ServiceUnavailable;
