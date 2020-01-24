@@ -136,7 +136,7 @@ class Conflict extends ApiError {
 		[ message, options ] = ApiError._correctArguments(message, options);
 		super(message || 'Resource already exists.', merge(options, {
 			name: options.name || 'already-exists',
-			statuCode: 409
+			statusCode: 409
 		}));
 	}
 
