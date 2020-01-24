@@ -118,6 +118,18 @@ class NotAuthorized extends ApiError {
 
 }
 
+class Forbidden extends ApiError {
+
+	constructor(message, options) {
+		[ message, options ] = ApiError._correctArguments(message, options);
+		super(message || 'Forbidden.', merge(options, {
+			name: 'forbidden',
+			statusCode: 403
+		}));
+	}
+
+}
+
 class NotFound extends ApiError {
 
 	constructor(message, options) {
@@ -228,6 +240,7 @@ class ServiceUnavailable extends ApiError {
 
 module.exports = exports = ApiError;
 exports.NotAuthorized = NotAuthorized;
+exports.Forbidden = Forbidden;
 exports.NotFound = NotFound;
 exports.Conflict = Conflict;
 exports.MethodNotAllowed = MethodNotAllowed;
