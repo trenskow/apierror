@@ -206,7 +206,7 @@ class InternalError extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message || 'Internal error.', merge(options, {
+		super(message || 'Internal server error.', merge(options, {
 			name: options.name || 'internal-error',
 			statusCode: 500
 		}));
