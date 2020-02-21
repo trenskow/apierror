@@ -218,7 +218,7 @@ class NotImplemented extends ApiError {
 
 	constructor(message, options) {
 		[ message, options ] = ApiError._correctArguments(message, options);
-		super(message | 'Not implemented.', merge(options, {
+		super(message || 'Not implemented.', merge(options, {
 			name: options.name || 'not-implemented',
 			statusCode: 501
 		}));
