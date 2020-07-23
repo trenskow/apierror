@@ -37,6 +37,13 @@ class ApiError extends Error {
 		this._entity = options.entity;
 		this._statusCode = options.statusCode || 500;
 
+		delete options.message;
+		delete options.name;
+		delete options.entity;
+		delete options.statusCode;
+
+		this._options = options;
+
 		if (typeof options.keyPath === 'string') options.keyPath = options.keyPath.split('.');
 
 		this._keyPath = options.keyPath;
@@ -61,6 +68,10 @@ class ApiError extends Error {
 
 	get keyPath() {
 		return this._keyPath;
+	}
+
+	get options() {
+		return this._options;
 	}
 
 	get origin() {
