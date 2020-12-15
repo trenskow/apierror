@@ -50,7 +50,7 @@ class ApiError extends Error {
 
 		this._origin = options.origin;
 
-		this._underlaying = options.underlaying || options.underlying;
+		this._underlying = options.underlying;
 
 	}
 
@@ -78,19 +78,12 @@ class ApiError extends Error {
 		return this._origin;
 	}
 
-	/**
-	 * @deprecated Since version 2.1.0. Will be deleted in version 3.0.0. Use `underlaying` instead.
-	 */
 	get underlying() {
-		return this._underlaying;
-	}
-
-	get underlaying() {
-		return this._underlaying;
+		return this._underlying;
 	}
 
 	get actual() {
-		return this._underlaying || this;
+		return this._underlying || this;
 	}
 
 	get stacked() {
