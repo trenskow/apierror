@@ -6,10 +6,13 @@ const
 class ApiError extends Error {
 
 	static parse(data, statusCode, origin) {
-		return new ApiError(merge(data, {
+		let error = new ApiError(merge(true, data, {
+			message: '',
 			statusCode: statusCode,
 			origin: origin
 		}));
+		error.message = data.message;
+		return error;
 	}
 
 	static _correctArguments(message, options) {
