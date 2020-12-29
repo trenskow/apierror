@@ -7,11 +7,10 @@ class ApiError extends Error {
 
 	static parse(data, statusCode, origin) {
 		let error = new ApiError(merge(true, data, {
-			message: '',
+			message: data.message,
 			statusCode: statusCode,
 			origin: origin
 		}));
-		error.message = data.message;
 		return error;
 	}
 
