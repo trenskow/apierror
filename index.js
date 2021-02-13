@@ -1,7 +1,8 @@
 'use strict';
 
 const
-	merge = require('merge');
+	merge = require('merge'),
+	stack = require('@trenskow/stack');
 
 class ApiError extends Error {
 
@@ -89,22 +90,7 @@ class ApiError extends Error {
 	}
 
 	get stacked() {
-		return this.actual.stack
-			.split('\n')
-			.map(line => line.trim())
-			.slice(1)
-			.map((line) => {
-				return /^at ((.*?)(?: \[as (.*?)\])? \((.*?):([0-9]+):([0-9]+)\)|(.*?):([0-9]+):([0-9]+))$/.exec(line);
-			})
-			.filter(line => line)
-			.map((line) => {
-				return {
-					function: line[3] || line[2] || line[7],
-					file: line[4],
-					line: parseInt(line[5] || line[8]),
-					pos: parseInt(line[6] || line[9])
-				};
-			});
+		return stack(this.actual.stack);
 	}
 
 	toJSON(options = {}) {

@@ -1,6 +1,6 @@
 {
   "name": "@trenskow/apierror",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "A small collection of error objects that can be used for REST APIs.",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/trenskow/apierror#readme",
   "dependencies": {
+    "@trenskow/stack": "^0.1.1",
     "merge": "^1.2.1"
   }
 }
