@@ -1,6 +1,6 @@
 {
   "name": "@trenskow/apierror",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "A small collection of error objects that can be used for REST APIs.",
   "main": "index.js",
   "scripts": {
@@ -24,5 +24,8 @@
   "dependencies": {
     "@trenskow/stack": "^0.1.1",
     "merge": "^1.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0"
   }
 }

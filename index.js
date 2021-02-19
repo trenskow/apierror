@@ -32,9 +32,9 @@ class ApiError extends Error {
 
 		[ message, options ] = ApiError._correctArguments(message, options);
 
-		if (typeof message !== 'string') throw TypeError('Message must be of type string.');
+		super();
 
-		super(message);
+		this.message = message;
 
 		this._name = options.name;
 		this._entity = options.entity;
