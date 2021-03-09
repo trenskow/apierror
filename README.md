@@ -1,4 +1,4 @@
-@trenskow/apierror
+@trenskow/api-error
 ----
 
 # Introduction
@@ -10,4 +10,3 @@ See `index.js` for reference.
 # License
 
 BSD-3-Clause (see LICENSE).
-

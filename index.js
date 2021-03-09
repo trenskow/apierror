@@ -28,6 +28,10 @@ class ApiError extends Error {
 
 	}
 
+	static stackToJSON(s) {
+		return stack(s);
+	}
+
 	constructor(message, options) {
 
 		[ message, options ] = ApiError._correctArguments(message, options);
@@ -90,7 +94,7 @@ class ApiError extends Error {
 	}
 
 	get stacked() {
-		return stack(this.actual.stack);
+		return ApiError.stackToJSON(this.actual.stack);
 	}
 
 	toJSON(options = {}) {
