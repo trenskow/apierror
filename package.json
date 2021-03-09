@@ -24,5 +24,8 @@
   "dependencies": {
     "@trenskow/stack": "^0.1.1",
     "merge": "^1.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0"
   }
 }
